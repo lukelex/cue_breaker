@@ -4,10 +4,10 @@ Gem::Specification.new do |s|
   s.name        = "cue_breaker"
   s.version     = CueBreaker::VERSION
   s.summary     = "Breaks CUE files into mp3s"
-  s.description = "A simple hello world gem"
+  s.description = "Breaks down large CUE/WAV files into mp3 chunks"
   s.authors     = ["Lukas Alexander"]
   s.email       = "the.lukelex@gmail.com"
-  s.homepage    = "https://rubygems.org/gems/cue_breaker"
+  s.homepage    = "https://github.com/lukelex/cue_breaker"
   s.license     = "MIT"
 
   s.bindir      = "bin"
