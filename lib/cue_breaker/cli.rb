@@ -15,7 +15,7 @@ module CueBreaker
 
       duration = Core.get_audio_duration(options.wav)
       Core.parse_cue(options.cue, duration: duration) do |album, song|
-        Core.convert_to_mp3(options.wav, album, song, options.output)
+        Core.convert_to_mp3(options.wav, album.present, song.present, options.output)
       end
     end
 
