@@ -14,14 +14,12 @@ module CueBreaker
         song.merge({
           start: song.fetch(:index).to_s,
           end: (song.fetch(:index) + song.fetch(:duration)).to_s,
-          album: cue.title,
-          date: cue.date,
         })
       end
 
       album = Struct
-        .new(:genre, :total_tracks)
-        .new(cue.genre, cue.songs.count)
+        .new(:name, :genre, :total_tracks, :year)
+        .new(cue.title, cue.genre, cue.songs.count, cue.date)
 
       songs.each { |song| block.call(album, song) }
     end
@@ -50,7 +48,8 @@ module CueBreaker
         "-metadata", "title=#{track[:title]}",
         "-metadata", "artist=#{track[:performer]}",
         "-metadata", "genre=#{genre}",
-        "-metadata", "album=#{track[:album]}",
+        "-metadata", "album=#{album.name}",
+        "-metadata", "year=#{album.year}",
         "-metadata", "track=#{track[:track]}/#{album.total_tracks}",
         "-q:a", "0",
         output_file_path
