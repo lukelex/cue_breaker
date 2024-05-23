@@ -1,8 +1,9 @@
 require 'optparse'
+require 'delegate'
 
+require 'cue_breaker/version'
 require 'cue_breaker/core'
 require 'cue_breaker/dependencies'
-require 'delegate'
 
 module CueBreaker
   module CLI

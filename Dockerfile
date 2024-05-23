@@ -4,8 +4,6 @@ WORKDIR /usr/src/app
 
 RUN apt-get update && apt-get install -y ffmpeg
 
-ADD Gemfile* *.gemspec ./
+COPY . .
 
 RUN bundle install
-
-COPY . .

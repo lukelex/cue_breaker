@@ -1,6 +1,8 @@
+require_relative 'lib/cue_breaker/version'
+
 Gem::Specification.new do |s|
   s.name        = "cue_breaker"
-  s.version     = "0.1.0"
+  s.version     = CueBreaker::VERSION
   s.summary     = "Breaks CUE files into mp3s"
   s.description = "A simple hello world gem"
   s.authors     = ["Lukas Alexander"]
