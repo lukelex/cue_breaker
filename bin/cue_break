@@ -1,0 +1,7 @@
+#!/usr/local/bin/ruby
+
+require 'bundler/setup'
+
+require 'cue_breaker'
+
+CueBreaker::CLI.start

@@ -1,0 +1,6 @@
+services:
+  breaker:
+    image: "cue-breaker"
+    build: "."
+    volumes:
+      - ".:/usr/src/app"
