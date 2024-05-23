@@ -6,23 +6,32 @@ module CueBreaker
   module Core
     extend self
 
-    def parse_cue(cue_file, duration:)
+    def parse_cue(cue_file, duration:, &block)
       cue = RubyCue::Cuesheet.new(File.read(cue_file), duration.to_i)
       cue.parse!
 
-      cue.songs.map do |song, index|
+      songs = cue.songs.map do |song, index|
         song.merge({
           start: song.fetch(:index).to_s,
           end: (song.fetch(:index) + song.fetch(:duration)).to_s,
+          album: cue.title,
+          date: cue.date,
         })
       end
+
+      album = Struct
+        .new(:genre, :total_tracks)
+        .new(cue.genre, cue.songs.count)
+
+      songs.each { |song| block.call(album, song) }
     end
 
-    def convert_to_mp3(wav_file, track, output_dir)
+    def convert_to_mp3(wav_file, album, track, output_dir)
       start_time = parse_time(track[:start])
       end_time = track[:end] ? parse_time(track[:end]) : nil
       track_title = sanitize_file_name(track[:title])
       performer = sanitize_file_name(track[:performer])
+      genre = sanitize_file_name(album.genre)
       output_path = File.join(output_dir, track[:performer])
       output_file_path = File.join(output_path, "#{format('%02d', track[:track])} - #{track_title}.mp3")
 
@@ -40,6 +49,9 @@ module CueBreaker
       ffmpeg_args += [
         "-metadata", "title=#{track[:title]}",
         "-metadata", "artist=#{track[:performer]}",
+        "-metadata", "genre=#{genre}",
+        "-metadata", "album=#{track[:album]}",
+        "-metadata", "track=#{track[:track]}/#{album.total_tracks}",
         "-q:a", "0",
         output_file_path
       ]

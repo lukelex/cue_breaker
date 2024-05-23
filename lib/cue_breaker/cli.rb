@@ -14,14 +14,15 @@ module CueBreaker
       options = Options.new
 
       duration = Core.get_audio_duration(options.wav)
-      Core.parse_cue(options.cue, duration: duration).each do |song|
-        Core.convert_to_mp3(options.wav, song, options.output)
+      Core.parse_cue(options.cue, duration: duration) do |album, song|
+        Core.convert_to_mp3(options.wav, album, song, options.output)
       end
     end
 
     class Options < SimpleDelegator
       def initialize
         options = {}
+
         OptionParser.new do |opt|
           opt.on('-c', '--cue CUEFILE') { |o| options[:cue] = o }
           opt.on('-w', '--wav WAVFILE') { |o| options[:wav] = o }
