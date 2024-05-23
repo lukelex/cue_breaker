@@ -18,7 +18,7 @@ module CueBreaker
       end
 
       def genre
-        super.gsub(/[<>:"\/\\|?*]/, '')
+        super&.gsub(/[<>:"\/\\|?*]/, '').to_s
       end
     end
   end

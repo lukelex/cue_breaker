@@ -4,7 +4,7 @@ module CueBreaker
       @file, @album, @track = file, album, track
     end
 
-    def arguments(output_path)
+    def options(output_path)
       [
         file,
         start,
@@ -15,7 +15,7 @@ module CueBreaker
       ].reject(&:empty?).flatten
     end
 
-    def file 
+    def file
       ["-i", @file]
     end
 
@@ -35,7 +35,6 @@ module CueBreaker
         "-metadata", "artist=#{@album.performer}",
         "-metadata", "genre=#{@album.genre}",
         "-metadata", "album=#{@album.title}",
-        "-metadata", "year=#{@album.date}",
         "-metadata", "date=#{@album.date}",
         "-metadata", "track=#{@album.track_number(@track)}",
       ]
@@ -43,7 +42,7 @@ module CueBreaker
 
     def output_file_path(output_path)
       File.join(
-        output_path, 
+        output_path,
         "#{format('%02d', @track.number)} - #{@track.title}.mp3"
       )
     end

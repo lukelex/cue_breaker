@@ -12,22 +12,32 @@ module CueBreaker
     def start
       Dependencies.check!
 
-      options = Options.new
-
       duration = Core.get_audio_duration(options.wav)
+
       Core.parse_cue(options.cue, duration: duration) do |album, song|
         Core.convert_to_mp3(options.wav, album.present, song.present, options.output)
       end
+    end
+
+    private
+
+    def options
+      @_options ||= Options.new
     end
 
     class Options < SimpleDelegator
       def initialize
         options = {}
 
-        OptionParser.new do |opt|
-          opt.on('-c', '--cue CUEFILE') { |o| options[:cue] = o }
-          opt.on('-w', '--wav WAVFILE') { |o| options[:wav] = o }
-          opt.on('-o', '--output LASTNAME') { |o| options[:output] = o }
+        OptionParser.new do |parser|
+          parser.banner = <<~BANNER
+            cue_break version #{VERSION}
+            Usage: cue_break [options]
+          BANNER
+
+          parser.on('-c', '--cue CUEFILE') { |o| options[:cue] = o }
+          parser.on('-w', '--wav WAVFILE') { |o| options[:wav] = o }
+          parser.on('-o', '--output OUTPUT') { |o| options[:output] = o }
         end.parse!
 
         super Struct.new(*options.keys).new(*options.values)
