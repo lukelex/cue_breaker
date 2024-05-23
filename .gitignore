@@ -1,0 +1,6 @@
+output/
+
+*.gem
+
+*.mp3
+*.wav
