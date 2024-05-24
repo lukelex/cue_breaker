@@ -4,9 +4,21 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 3
 
+require:
+  - rubocop-rspec
+
 Metrics/BlockLength:
   Exclude:
     - "spec/**/*_spec.rb"
 
+Naming/MemoizedInstanceVariableName:
+  EnforcedStyleForLeadingUnderscores: required
+
 Style/StringLiterals:
   EnforcedStyle: double_quotes
+
+RSpec/NestedGroups:
+  Max: 4
+
+RSpec/MultipleExpectations:
+  Enabled: false

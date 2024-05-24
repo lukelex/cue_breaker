@@ -10,30 +10,30 @@ RSpec.describe CueBreaker::Cue::Index do
 
     it "initializes from an array if specified default" do
       index = described_class.new([5, 0, 75])
-      expect(index.minutes).to eql(5)
-      expect(index.seconds).to eql(0)
-      expect(index.frames).to eql(75)
+      expect(index.minutes).to be(5)
+      expect(index.seconds).to be(0)
+      expect(index.frames).to be(75)
     end
 
     it "initializes from integer seconds less than a minute" do
       index = described_class.new(30)
-      expect(index.minutes).to eql(0)
-      expect(index.seconds).to eql(30)
-      expect(index.frames).to eql(0)
+      expect(index.minutes).to be(0)
+      expect(index.seconds).to be(30)
+      expect(index.frames).to be(0)
     end
 
     it "initializes from integer seconds over a minute" do
       index = described_class.new(90)
-      expect(index.minutes).to eql(1)
-      expect(index.seconds).to eql(30)
-      expect(index.frames).to eql(0)
+      expect(index.minutes).to be(1)
+      expect(index.seconds).to be(30)
+      expect(index.frames).to be(0)
     end
 
     it "initializes from integer seconds at a minute" do
       index = described_class.new(60)
-      expect(index.minutes).to eql(1)
-      expect(index.seconds).to eql(0)
-      expect(index.frames).to eql(0)
+      expect(index.minutes).to be(1)
+      expect(index.seconds).to be(0)
+      expect(index.frames).to be(0)
     end
 
     it "raises an error if the array size is not size 3" do
@@ -44,16 +44,16 @@ RSpec.describe CueBreaker::Cue::Index do
       expect { described_class.new([0, "moose", 0]) }.to raise_error(ArgumentError)
     end
 
-    context "conversions" do
+    context "when converting" do
       describe "#to_f" do
         it "converts an array value under a minute" do
           index = described_class.new([0, 30, 0])
-          expect(index.to_f).to eql(30.0)
+          expect(index.to_f).to be(30.0)
         end
 
         it "converts an array value over a minute" do
           index = described_class.new([1, 30, 0])
-          expect(index.to_f).to eql(90.0)
+          expect(index.to_f).to be(90.0)
         end
 
         it "converts an array value over a minute with frames" do
@@ -71,7 +71,7 @@ RSpec.describe CueBreaker::Cue::Index do
       describe "#to_i" do
         it "converts to seconds and rounds down" do
           index = described_class.new([0, 30, 74])
-          expect(index.to_i).to eql(30)
+          expect(index.to_i).to be(30)
         end
       end
 
@@ -83,7 +83,7 @@ RSpec.describe CueBreaker::Cue::Index do
       end
     end
 
-    context "computations" do
+    context "when computing time" do
       describe "#+" do
         it "returns an object of Class Index" do
           index1 = described_class.new([0, 30, 0])
@@ -126,7 +126,7 @@ RSpec.describe CueBreaker::Cue::Index do
           index1 = described_class.new([0, 30, 0])
           index2 = described_class.new([0, 30, 0])
 
-          expect((index1 - index2).class).to eql(CueBreaker::Cue::Index)
+          expect((index1 - index2).class).to eql(described_class)
         end
 
         it "subtracts two indices with only frames" do

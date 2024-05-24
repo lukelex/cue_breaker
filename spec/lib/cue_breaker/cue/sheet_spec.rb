@@ -17,7 +17,7 @@ RSpec.describe CueBreaker::Cue::Sheet do
   end
 
   describe "#parse!" do
-    context "properly formatted sheet" do
+    context "with a properly formatted sheet" do
       it "returns true if successfully parsed" do
         expect(sheet.parse!).to be_truthy
       end
@@ -30,36 +30,22 @@ RSpec.describe CueBreaker::Cue::Sheet do
         expect(sheet.title).to eq("Essential Mix (2010-10-09)")
       end
 
-      it "has the right first track" do
-        expect(sheet.songs.first[:title]).to eq("Intro")
+      it "has the right data for the first track" do
+        song = sheet.songs.first
+
+        expect(song[:title]).to eq("Intro")
+        expect(song[:performer]).to eq("Essential Mix")
+        expect(song[:index]).to eq([0, 0, 0])
+        expect(song[:track]).to eq(1)
       end
 
-      it "has the right last track" do
-        expect(sheet.songs.last[:title]).to eq("The Lotus Symphony vs. Uplifting")
-      end
+      it "has the right data for the last track" do
+        song = sheet.songs.last
 
-      it "has the right first performer" do
-        expect(sheet.songs.first[:performer]).to eq("Essential Mix")
-      end
-
-      it "has the right last performer" do
-        expect(sheet.songs.last[:performer]).to eq("Netsky vs. Genetic Bros")
-      end
-
-      it "has the right first index" do
-        expect(sheet.songs.first[:index]).to eq([0, 0, 0])
-      end
-
-      it "has the right last index" do
-        expect(sheet.songs.last[:index]).to eq([115, 22, 47])
-      end
-
-      it "has the right first track" do
-        expect(sheet.songs.first[:track]).to eq(1)
-      end
-
-      it "has the right last track" do
-        expect(sheet.songs.last[:track]).to eq(53)
+        expect(song[:title]).to eq("The Lotus Symphony vs. Uplifting")
+        expect(song[:performer]).to eq("Netsky vs. Genetic Bros")
+        expect(song[:index]).to eq([115, 22, 47])
+        expect(song[:track]).to eq(53)
       end
 
       it "has the right amount of tracks" do
@@ -91,8 +77,8 @@ RSpec.describe CueBreaker::Cue::Sheet do
       end
     end
 
-    context "improperly formatted sheet" do
-      it "should raise an exception for a bogus formatted sheet" do
+    context "with an improperly formatted sheet" do
+      it "raises an exception for a bogus formatted sheet" do
         sheet = described_class.new("Something bogus")
         expect { sheet.parse! }.to raise_error(described_class::MalformedError)
       end
@@ -104,7 +90,7 @@ RSpec.describe CueBreaker::Cue::Sheet do
       end
     end
 
-    context "multiple files sheet" do
+    context "with a multiple files sheet" do
       let(:sheet_file) { cue_sheet_fixture("multi_file") }
       let(:sheet) { described_class.new(sheet_file) }
 

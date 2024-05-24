@@ -92,11 +92,11 @@ module CueBreaker
       end
 
       def parse_tracks
-        @parse_tracks ||= cuesheet_scan(:track).map { |track| track.first.to_i }
+        @_parse_tracks ||= cuesheet_scan(:track).map { |track| track.first.to_i }
       end
 
       def parse_indices
-        @parse_indices ||= cuesheet_scan(:index).map do |index|
+        @_parse_indices ||= cuesheet_scan(:index).map do |index|
           Index.new([index[0].to_i, index[1].to_i, index[2].to_i])
         end
       end
