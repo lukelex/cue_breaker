@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.license       = "MIT"
 
   s.bindir        = "bin"
-  s.files         = Dir["lib/**/*", "bin/*", "README.md", "LICENSE.txt"]
+  s.files         = Dir["lib/**/*", "bin/*", "README.md"]
   s.executables   = ["cue_break"]
   s.require_paths = ["lib"]
 
