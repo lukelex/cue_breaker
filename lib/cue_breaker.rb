@@ -1,6 +1,4 @@
-require 'rubycue'
-require 'fileutils'
-require 'open3'
+# frozen_string_literal: true
 
-require 'cue_breaker/cli'
-require 'cue_breaker/core'
+require "cue_breaker/cli"
+require "cue_breaker/core"

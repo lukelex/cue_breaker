@@ -1,7 +1,8 @@
 #!/usr/local/bin/ruby
+# frozen_string_literal: true
 
-require 'bundler/setup'
+require "bundler/setup"
 
-require 'cue_breaker'
+require "cue_breaker"
 
 CueBreaker::CLI.start

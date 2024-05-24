@@ -1,11 +1,16 @@
-require 'delegate'
+# frozen_string_literal: true
+
+require "delegate"
 
 module CueBreaker
   class Track
     attr_reader :title, :number, :start, :finish
 
     def initialize(title:, number:, start:, finish:)
-      @title, @number, @start, @finish = title, number, start, finish
+      @title = title
+      @number = number
+      @start = start
+      @finish = finish
     end
 
     def present
@@ -24,7 +29,7 @@ module CueBreaker
       private
 
       def parse_time(time_str)
-        parts = time_str.split(':').map(&:to_f)
+        parts = time_str.split(":").map(&:to_f)
         (parts[0] * 60) + parts[1] + (parts[2] / 75.0)
       end
     end

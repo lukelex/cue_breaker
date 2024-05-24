@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 module CueBreaker
   class FFmpegArgs
     def initialize(file, album, track)
-      @file, @album, @track = file, album, track
+      @file = file
+      @album = album
+      @track = track
     end
 
     def options(output_path)
@@ -36,7 +40,7 @@ module CueBreaker
         "-metadata", "genre=#{@album.genre}",
         "-metadata", "album=#{@album.title}",
         "-metadata", "date=#{@album.date}",
-        "-metadata", "track=#{@album.track_number(@track)}",
+        "-metadata", "track=#{@album.track_number(@track)}"
       ]
     end
 

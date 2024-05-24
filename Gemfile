@@ -1,5 +1,12 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 
 gemspec
 
-gem "rubycue", git: "https://github.com/kvn47/rubycue"
+group :development, :test do
+  gem "pry-nav", "~> 1.0"
+  gem "rspec", "~> 3.13"
+  gem "rubocop", "~> 1.64"
+  gem "rubocop-rspec"#, "~> 1.64"
+end

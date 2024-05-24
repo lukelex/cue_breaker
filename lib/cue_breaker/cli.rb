@@ -1,9 +1,11 @@
-require 'optparse'
-require 'delegate'
+# frozen_string_literal: true
 
-require 'cue_breaker/version'
-require 'cue_breaker/core'
-require 'cue_breaker/dependencies'
+require "optparse"
+require "delegate"
+
+require "cue_breaker/version"
+require "cue_breaker/core"
+require "cue_breaker/dependencies"
 
 module CueBreaker
   module CLI
@@ -30,18 +32,20 @@ module CueBreaker
         options = {}
 
         OptionParser.new do |parser|
-          parser.banner = <<~BANNER
-            cue_break version #{VERSION}
-            Usage: cue_break [options]
-          BANNER
+          parser.banner = BANNER
 
-          parser.on('-c', '--cue CUEFILE') { |o| options[:cue] = o }
-          parser.on('-w', '--wav WAVFILE') { |o| options[:wav] = o }
-          parser.on('-o', '--output OUTPUT') { |o| options[:output] = o }
+          parser.on("-c", "--cue CUEFILE") { |o| options[:cue] = o }
+          parser.on("-w", "--wav WAVFILE") { |o| options[:wav] = o }
+          parser.on("-o", "--output OUTPUT") { |o| options[:output] = o }
         end.parse!
 
-        super Struct.new(*options.keys).new(*options.values)
+        super(Struct.new(*options.keys).new(*options.values))
       end
+
+      BANNER = <<~BANNER.freeze
+        cue_break version #{VERSION}
+        Usage: cue_break [options]
+      BANNER
     end
   end
 end
